@@ -6,10 +6,18 @@
 import sys
 import Adafruit_DHT
 import logging
+import wiringpi
 
 #Define sensor type (DHT22) and GPIO number
 SENSOR = 22
 PIN = 4
+
+#Define GPIO relay
+PIN_WIRE = 18
+OUTPUT = 1
+
+wiringpi.wiringPiSetup()
+wiringpi.pinMode(PIN_WIRE, OUTPUT)
 
 #Define log file
 logging.basicConfig(filename='/var/log/inkoutpi.log', 
@@ -18,8 +26,8 @@ logging.basicConfig(filename='/var/log/inkoutpi.log',
                     datefmt='%d/%m/%Y %I:%M:%S')
 
 # Define temperature/humidity range
-TEMP_MAX = 31.0
-TEMP_MIN = 30.0
+TEMP_MAX = 27.0
+TEMP_MIN = 26.0
 HUMI_MIN = 70.0
 
 
@@ -31,8 +39,10 @@ humidity, temperature = Adafruit_DHT.read_retry(SENSOR, PIN)
 def hot_wire(enable):
     if enable:
         logging.info('Heating wire enabled Temp={0:0.1f}* < Temp_min={1:0.1f}'.format(temperature, TEMP_MIN))
+	wiringpi.digitalWrite(PIN_WIRE, 1)
     else:
         logging.info('Heating wire disabled Temp={0:0.1f}* > Temp_max={1:0.1f}'.format(temperature, TEMP_MAX))
+	wiringpi.digitalWrite(PIN_WIRE, 0)
     return;
 
 # Enable fan
@@ -56,7 +66,7 @@ if temperature is not None:
     if temperature < TEMP_MIN:
         hot_wire(True)
         fan(True)
-    elif temperature > temp_max:
+    elif temperature > TEMP_MAX:
         hot_wire(False)
         fan(False)
 else:

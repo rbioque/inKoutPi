@@ -11,11 +11,17 @@ sudo apt-get install build-essential python-dev python-openssl
 - Adafruit_Python_DHT
 git clone https://github.com/adafruit/Adafruit_Python_DHT.git
 cd Adafruit_Python_DHT
+sudo python setup.py install
 
+- WiringPi for python
+sudo apt-get install python-dev python-setuptools swig
+git clone --recursive https://github.com/WiringPi/WiringPi-Python.git
+cd WiringPi-Python
+./build.sh
 sudo python setup.py install
 
 Crontab configure:
-crontab -e
+sudo crontab -e
 
 */1 * * * * /usr/bin/python /home/pi/inKoutPi/tempControl.py
 */1 * * * * sleep 30 && /usr/bin/python /home/pi/inKoutPi/tempControl.py
