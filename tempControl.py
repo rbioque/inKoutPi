@@ -7,6 +7,7 @@ import sys
 import Adafruit_DHT
 import logging
 import wiringpi
+import time
 
 #Define sensor type (DHT22) and GPIO number
 SENSOR = 22
@@ -14,10 +15,16 @@ PIN = 4
 
 #Define GPIO relay
 PIN_WIRE = 18
-OUTPUT = 1
+PIN_FAN = 23
+ON = 1
+OFF = 0
 
-wiringpi.wiringPiSetup()
-wiringpi.pinMode(PIN_WIRE, OUTPUT)
+#Calibrate DHT22
+DHT_CAL = 0.6
+
+wiringpi.wiringPiSetupGpio()
+wiringpi.pullUpDnControl(PIN_FAN, OFF)  
+wiringpi.pullUpDnControl(PIN_WIRE, OFF)
 
 #Define log file
 logging.basicConfig(filename='/var/log/inkoutpi.log', 
@@ -26,31 +33,39 @@ logging.basicConfig(filename='/var/log/inkoutpi.log',
                     datefmt='%d/%m/%Y %I:%M:%S')
 
 # Define temperature/humidity range
-TEMP_MAX = 27.0
-TEMP_MIN = 26.0
-HUMI_MIN = 70.0
+TEMP_MAX = 30.10
+TEMP_MIN = 30.00
+HUMI_MIN = 70.00
 
 
 # Try to grab a sensor reading.  Use the read_retry method which will retry up
 # to 15 times to get a sensor reading (waiting 2 seconds between each retry).
 humidity, temperature = Adafruit_DHT.read_retry(SENSOR, PIN)
 
+# Calibrate
+temperature = temperature + DHT_CAL
+
 # Enable heating wire
 def hot_wire(enable):
     if enable:
         logging.info('Heating wire enabled Temp={0:0.1f}* < Temp_min={1:0.1f}'.format(temperature, TEMP_MIN))
-	wiringpi.digitalWrite(PIN_WIRE, 1)
+	wiringpi.pinMode(PIN_WIRE, ON)
     else:
         logging.info('Heating wire disabled Temp={0:0.1f}* > Temp_max={1:0.1f}'.format(temperature, TEMP_MAX))
-	wiringpi.digitalWrite(PIN_WIRE, 0)
+	wiringpi.pinMode(PIN_WIRE, OFF)
     return;
 
 # Enable fan
 def fan(enable):
     if enable:
         logging.info('fan enabled')
+	wiringpi.pinMode(PIN_FAN, ON)
+	time.sleep(240)
+	logging.info('fan disabled')
+	wiringpi.pinMode(PIN_FAN, OFF)
     else:
         logging.info('fan disabled')
+	wiringpi.pinMode(PIN_FAN, OFF)
     return;
 
 # Note that sometimes you won't get a reading and
@@ -58,17 +73,17 @@ def fan(enable):
 # guarantee the timing of calls to read the sensor).
 # If this happens try again!
 if temperature is not None and humidity is not None:
-    logging.info('Temp={0:0.1f}*  Humidity={1:0.1f}%'.format(temperature, humidity))
+    logging.info('Temp={0:0.11f}*  Humidity={1:0.1f}%'.format(temperature, humidity))
 else:
     logging.error('Failed to get reading. Try again!')
 
 if temperature is not None:
-    if temperature < TEMP_MIN:
+    if temperature <= TEMP_MIN:
         hot_wire(True)
         fan(True)
-    elif temperature > TEMP_MAX:
+    elif temperature >= TEMP_MAX:
         hot_wire(False)
-        fan(False)
+#        fan(False)
 else:
         logging.error('Failed to get reading. Try again!')
 
