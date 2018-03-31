@@ -8,6 +8,7 @@ import Adafruit_DHT
 import logging
 import wiringpi
 import time
+import bdControl.py
 
 #Define sensor type (DHT22) and GPIO number
 SENSOR = 22
@@ -33,9 +34,9 @@ logging.basicConfig(filename='/var/log/inkoutpi.log',
                     datefmt='%d/%m/%Y %I:%M:%S')
 
 # Define temperature/humidity range
-TEMP_MAX = 30.10
-TEMP_MIN = 30.00
-HUMI_MIN = 70.00
+#TEMP_MAX = 30.10
+#TEMP_MIN = 30.00
+#HUMI_MIN = 70.00
 
 
 # Try to grab a sensor reading.  Use the read_retry method which will retry up
@@ -48,10 +49,10 @@ temperature = temperature + DHT_CAL
 # Enable heating wire
 def hot_wire(enable):
     if enable:
-        logging.info('Heating wire enabled Temp={0:0.1f}* < Temp_min={1:0.1f}'.format(temperature, TEMP_MIN))
+        logging.info('Heating wire enabled Temp={0:0.1f}* < Temp_min={1:0.1f}'.format(temperature, config.tem_min))
 	wiringpi.pinMode(PIN_WIRE, ON)
     else:
-        logging.info('Heating wire disabled Temp={0:0.1f}* > Temp_max={1:0.1f}'.format(temperature, TEMP_MAX))
+        logging.info('Heating wire disabled Temp={0:0.1f}* > Temp_max={1:0.1f}'.format(temperature, config.tem_max))
 	wiringpi.pinMode(PIN_WIRE, OFF)
     return;
 
@@ -72,23 +73,26 @@ def fan(enable):
 # the results will be null (because Linux can't
 # guarantee the timing of calls to read the sensor).
 # If this happens try again!
+
 if temperature is not None and humidity is not None:
     logging.info('Temp={0:0.11f}*  Humidity={1:0.1f}%'.format(temperature, humidity))
 else:
     logging.error('Failed to get reading. Try again!')
 
+config = find_config()
+
 if temperature is not None:
-    if temperature <= TEMP_MIN:
+    if temperature <= config.tem_min:
         hot_wire(True)
         fan(True)
-    elif temperature >= TEMP_MAX:
+    elif temperature >= config.tem_max:
         hot_wire(False)
 #        fan(False)
 else:
         logging.error('Failed to get reading. Try again!')
 
-if humidity is not None and humidity < HUMI_MIN:
-    logging.info('Send notice Humidity={0:0.1f}* < Humidity_min={1:0.1f}'.format(humidity, HUMI_MIN))
+if humidity is not None and humidity < config.hum_min:
+    logging.info('Send notice Humidity={0:0.1f}* < Humidity_min={1:0.1f}'.format(humidity, config.hum_min))
 
 
 

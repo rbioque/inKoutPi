@@ -26,3 +26,15 @@ sudo crontab -e
 */1 * * * * /usr/bin/python /home/pi/inKoutPi/tempControl.py
 */1 * * * * sleep 30 && /usr/bin/python /home/pi/inKoutPi/tempControl.py
 
+
+Version 1.1 inKoutPi
+
+- MongoDB
+sudo apt-get install mongodb
+sudo /etc/init.d/mongodb start
+mongo < /home/pi/inKoutPi/DB/mongo-1.0.js 
+
+- PyMongo
+sudo apt-get install python-pip
+sudo apt-get install build-essential python-dev
+sudo python -m pip install pymongo
