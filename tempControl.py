@@ -8,7 +8,7 @@ import Adafruit_DHT
 import logging
 import wiringpi
 import time
-import bdControl.py
+import bdControl
 
 #Define sensor type (DHT22) and GPIO number
 SENSOR = 22
@@ -79,10 +79,10 @@ if temperature is not None and humidity is not None:
 else:
     logging.error('Failed to get reading. Try again!')
 
-config = find_config()
+config = bdControl.find_config()
 
 if temperature is not None:
-    if temperature <= config.tem_min:
+    if temperature <= config.get("tem_min"):
         hot_wire(True)
         fan(True)
     elif temperature >= config.tem_max:
