@@ -1,6 +1,9 @@
+# -*- coding: utf-8 -*-
 # @proyect inKoutPi 
 # config "entity"
 __author__ = 'rbioque'
+
+import sys
 
 class Config:
 
@@ -14,10 +17,10 @@ class Config:
         return {
             "tem_min":self.tem_min,
             "tem_max":self.tem_max,
-            "hum_min": self.hum_min,
+            "hum_min":self.hum_min,
             "hum_max":self.hum_max
         }
 
     def __str__(self):
-        return "Temperatura mínima: %s - Temperatura máxima: %s - Humedad mínima: %i - Humedad máxima: %s" \
+        return "Temperatura mínima: %s - Temperatura máxima: %s - Humedad mínima: %s - Humedad máxima: %s" \
                %(self.tem_min, self.tem_max, self.hum_min, self.hum_max)

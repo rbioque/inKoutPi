@@ -8,7 +8,6 @@ import Adafruit_DHT
 import logging
 import wiringpi
 import time
-import bdControl
 
 #Define sensor type (DHT22) and GPIO number
 SENSOR = 22
@@ -34,9 +33,9 @@ logging.basicConfig(filename='/var/log/inkoutpi.log',
                     datefmt='%d/%m/%Y %I:%M:%S')
 
 # Define temperature/humidity range
-#TEMP_MAX = 30.10
-#TEMP_MIN = 30.00
-#HUMI_MIN = 70.00
+TEMP_MAX = 30.10
+TEMP_MIN = 30.00
+HUMI_MIN = 70.00
 
 
 # Try to grab a sensor reading.  Use the read_retry method which will retry up
@@ -49,10 +48,10 @@ temperature = temperature + DHT_CAL
 # Enable heating wire
 def hot_wire(enable):
     if enable:
-        logging.info('Heating wire enabled Temp={0:0.1f}* < Temp_min={1:0.1f}'.format(temperature, config.tem_min))
+        logging.info('Heating wire enabled Temp={0:0.1f}* < Temp_min={1:0.1f}'.format(temperature, TEMP_MIN))
 	wiringpi.pinMode(PIN_WIRE, ON)
     else:
-        logging.info('Heating wire disabled Temp={0:0.1f}* > Temp_max={1:0.1f}'.format(temperature, config.tem_max))
+        logging.info('Heating wire disabled Temp={0:0.1f}* > Temp_max={1:0.1f}'.format(temperature, TEMP_MAX))
 	wiringpi.pinMode(PIN_WIRE, OFF)
     return;
 
@@ -79,20 +78,18 @@ if temperature is not None and humidity is not None:
 else:
     logging.error('Failed to get reading. Try again!')
 
-config = bdControl.find_config()
-
 if temperature is not None:
-    if temperature <= config.get("tem_min"):
+    if temperature <= TEMP_MIN:
         hot_wire(True)
         fan(True)
-    elif temperature >= config.tem_max:
+    elif temperature >= TEMP_MAX:
         hot_wire(False)
 #        fan(False)
 else:
         logging.error('Failed to get reading. Try again!')
 
-if humidity is not None and humidity < config.hum_min:
-    logging.info('Send notice Humidity={0:0.1f}* < Humidity_min={1:0.1f}'.format(humidity, config.hum_min))
+if humidity is not None and humidity < HUMI_MIN:
+    logging.info('Send notice Humidity={0:0.1f}* < Humidity_min={1:0.1f}'.format(humidity, HUMI_MIN))
 
 
 

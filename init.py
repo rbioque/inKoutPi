@@ -3,13 +3,27 @@
 # @proyect inKoutPi
 # init
 __author__ = 'rbioque'
-
 import sys
-sys.path.insert(0, r'/config/')
+
 from config import configDao
+from history import historyDao, measure
+from components import *
 
+# DAO define
 cnfDao = configDao.ConfigDao()
+hisDao = historyDao.HistoryDao()
 
-print("prueba metodo")
-cnfDao.find_config()
+# Obtener medida
+
+# Insertar
+
+# Obtener limites
+
+# Cable/Ventilador
+
+
+print("historico")
+m = measure.Measure(30, 80, '1/1/2001')
+hisDao.persist(m)
+
 
