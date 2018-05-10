@@ -19,6 +19,15 @@ class Measure:
             "date":self.date,
         }
 
+    def getTemp(self):
+	return self.tem;
+
+    def getHumi(self):
+    	return self.hum;
+
+    def getDate(self):
+    	return self.date;
+
     def __str__(self):
         return "Temperatura: %s - Humedad: %s - Fecha: %s" \
 	 %(self.tem, self.hum, self.date)

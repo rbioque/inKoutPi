@@ -3,27 +3,33 @@
 # @proyect inKoutPi
 # init
 __author__ = 'rbioque'
+
 import sys
 
-from config import configDao
+from config import configDao, config
 from history import historyDao, measure
-from components import *
+from components import sensor, rele
+from alerts import mail
 
 # DAO define
 cnfDao = configDao.ConfigDao()
 hisDao = historyDao.HistoryDao()
 
-# Obtener medida
+# Obtain measure and configuration
+sensor = sensor.Sensor()
+config = cnfDao.find()
+rele = rele.Rele()
 
-# Insertar
+# Store measure
+hisDao.persist(sensor.getMeasure())
 
-# Obtener limites
+mail.Mail().send("prueba")
 
-# Cable/Ventilador
-
-
-print("historico")
-m = measure.Measure(30, 80, '1/1/2001')
-hisDao.persist(m)
-
+# Rele control
+if config.isTempLessRange(sensor.getMeasure().getTemp()):
+	rele.hotWire(True)
+	rele.fan(True)
+elif config.isTempGreaterRange(sensor.getMeasure().getTemp()):
+        rele.hotWire(False)
+#	rele.fan(False, 240)
 

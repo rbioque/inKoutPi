@@ -33,8 +33,8 @@ logging.basicConfig(filename='/var/log/inkoutpi.log',
                     datefmt='%d/%m/%Y %I:%M:%S')
 
 # Define temperature/humidity range
-TEMP_MAX = 30.10
-TEMP_MIN = 30.00
+TEMP_MAX = 25.10
+TEMP_MIN = 25.00
 HUMI_MIN = 70.00
 
 
