@@ -31,6 +31,41 @@ class Config:
 			return True;
 		return False;
 
+        def isTempAlertLessRange(self, temp):
+                if temp < 30.0:
+                        return True;
+                return False;
+
+        def isTempAlertGreaterRange(self, temp):
+                if temp > 31.0:
+                        return True;
+                return False;
+	
+	def isHumAlertLessRange(self, hum):
+		if hum < 70:
+			return True;
+		return False;
+
+	def isDoorOpen(self, hum):
+		if hum == 1.0:
+			return True;
+		return False;
+
+	def getTemMin(self):
+		return self.tem_min;
+	
+	def getTemMax(self):
+		return self.tem_max;
+	
+	def getTemAlertMin(self):
+		return 30.0;
+
+	def getTemAlertMax(self):
+		return 31.0;
+
+	def getHumAlertMin(self):
+		return 70;
+
     	def __str__(self):
         	return "Temp min: %s - Temp max: %s - Hum min: %s - Hum max: %s" \
                %(self.tem_min, self.tem_max, self.hum_min, self.hum_max)

@@ -29,5 +29,5 @@ class Measure:
     	return self.date;
 
     def __str__(self):
-        return "Temperatura: %s - Humedad: %s - Fecha: %s" \
+        return "Temperature: %s - Humidity: %s - Date: %s" \
 	 %(self.tem, self.hum, self.date)

@@ -33,8 +33,8 @@ logging.basicConfig(filename='/var/log/inkoutpi.log',
                     datefmt='%d/%m/%Y %I:%M:%S')
 
 # Define temperature/humidity range
-TEMP_MAX = 25.10
-TEMP_MIN = 25.00
+TEMP_MAX = 32.10
+TEMP_MIN = 32.00
 HUMI_MIN = 70.00
 
 
@@ -50,9 +50,11 @@ def hot_wire(enable):
     if enable:
         logging.info('Heating wire enabled Temp={0:0.1f}* < Temp_min={1:0.1f}'.format(temperature, TEMP_MIN))
 	wiringpi.pinMode(PIN_WIRE, ON)
+	logging.debug(wiringpi.digitalRead(PIN_WIRE))
     else:
         logging.info('Heating wire disabled Temp={0:0.1f}* > Temp_max={1:0.1f}'.format(temperature, TEMP_MAX))
 	wiringpi.pinMode(PIN_WIRE, OFF)
+	logging.debug(wiringpi.digitalRead(PIN_WIRE))
     return;
 
 # Enable fan
@@ -60,12 +62,15 @@ def fan(enable):
     if enable:
         logging.info('fan enabled')
 	wiringpi.pinMode(PIN_FAN, ON)
+	logging.debug(wiringpi.digitalRead(PIN_FAN))
 	time.sleep(240)
 	logging.info('fan disabled')
 	wiringpi.pinMode(PIN_FAN, OFF)
+	logging.debug(wiringpi.digitalRead(PIN_FAN))
     else:
-        logging.info('fan disabled')
+	logging.info('fan disabled')
 	wiringpi.pinMode(PIN_FAN, OFF)
+	logging.debug(wiringpi.digitalRead(PIN_FAN))
     return;
 
 # Note that sometimes you won't get a reading and

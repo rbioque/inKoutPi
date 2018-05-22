@@ -13,6 +13,10 @@ PIN_FAN = 23
 ON = 1
 OFF = 0
 
+#Define components status
+STATUS_ON = 0
+STATUS_OFF = 1
+
 class Rele:
 
 	def __init__(self):
@@ -25,7 +29,13 @@ class Rele:
 			wiringpi.pinMode(PIN_WIRE, ON)
 		else:
 			wiringpi.pinMode(PIN_WIRE, OFF)
+
+	def isWireEnabled(self):
+		return wiringpi.digitalRead(PIN_WIRE) == STATUS_ON;
 	
+	def isWireDisabled(self):
+                return wiringpi.digitalRead(PIN_WIRE) == STATUS_OFF;
+		
 	def fan(self, status, waitTime=0):
 		time.sleep(waitTime)
 
@@ -34,3 +44,8 @@ class Rele:
 		else:
 			wiringpi.pinMode(PIN_FAN, OFF)
 
+	def isFanEnabled(self):
+		return wiringpi.digitalRead(PIN_FAN) == STATUS_ON;
+
+	def isFanDisabled(self):
+		return wiringpi.digitalRead(PIN_FAN) == STATUS_OFF;
