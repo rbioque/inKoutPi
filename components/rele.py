@@ -7,7 +7,8 @@ import time
 
 #Define GPIO relay
 PIN_WIRE = 18
-PIN_FAN = 23
+PIN_PELTIER = 23
+PIN_FAN = 24
 
 #Define GPIO state
 ON = 1
@@ -35,7 +36,19 @@ class Rele:
 	
 	def isWireDisabled(self):
                 return wiringpi.digitalRead(PIN_WIRE) == STATUS_OFF;
-		
+	
+        def coldPeltier(self, status):
+                if status:
+                        wiringpi.pinMode(PIN_PELTIER, ON)
+                else:
+                        wiringpi.pinMode(PIN_PELTIER, OFF)
+
+        def isPeltierEnabled(self):
+                return wiringpi.digitalRead(PIN_PELTIER) == STATUS_ON;
+
+        def isPeltierDisabled(self):
+                return wiringpi.digitalRead(PIN_PELTIER) == STATUS_OFF;
+	
 	def fan(self, status, waitTime=0):
 		time.sleep(waitTime)
 

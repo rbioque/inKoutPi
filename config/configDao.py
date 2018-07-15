@@ -4,6 +4,7 @@ __author__ = 'rbioque'
 
 import pymongo
 import config
+import configAlert
 
 class ConfigDao:
 
@@ -14,7 +15,12 @@ class ConfigDao:
 		self.db = client.inKoutPiDB
 
 	def find(self):
-		r = self.db.CONFIG.find_one()
+		r = self.db.CONFIG.find_one({'type': "CONFIG"})
 		c = config.Config(r['tem_min'], r['tem_max'],r['hum_min'],r['hum_max'])
 		return c;
+	
+	def findAlert(self):
+		r = self.db.CONFIG.find_one({'type': "CONFIG_ALERT"})
+                c = configAlert.ConfigAlert(r['tem_alert_min'], r['tem_alert_max'],r['hum_alert_min'],r['hum_alert_max'])
+                return c;
 		

@@ -5,6 +5,9 @@ __author__ = 'rbioque'
 
 import sys
 
+TEMP_CAL = 0.1
+TEMP_STOP_CAL = 0.01
+
 class Config:
 
 	def __init__(self, tem_min, tem_max, hum_min, hum_max):
@@ -20,36 +23,32 @@ class Config:
             		"hum_min":self.hum_min,
             		"hum_max":self.hum_max
         	}
+
 	
-	def isTempLessRange(self, temp):
-		if temp < self.tem_min:
+	# Components control
+
+	def isTempLessRangeByWire(self, temp):
+		if temp <= self.getTemMinByWire():
 			return True;
 		return False;
 
-	def isTempGreaterRange(self, temp):
-		if temp > self.tem_max:
+	def isTempGreaterRangeByWire(self, temp):
+		if temp >= self.getTemMin()-TEMP_STOP_CAL:
 			return True;
 		return False;
 
-        def isTempAlertLessRange(self, temp):
-                if temp < 30.0:
+	def isTempLessRangeByPeltier(self, temp):
+                if temp <= self.getTemMax()+TEMP_STOP_CAL:
                         return True;
                 return False;
 
-        def isTempAlertGreaterRange(self, temp):
-                if temp > 31.0:
+        def isTempGreaterRangeByPeltier(self, temp):
+                if temp >= self.getTemMaxByPeltier():
                         return True;
                 return False;
-	
-	def isHumAlertLessRange(self, hum):
-		if hum < 70:
-			return True;
-		return False;
 
-	def isDoorOpen(self, hum):
-		if hum == 1.0:
-			return True;
-		return False;
+
+	# Info
 
 	def getTemMin(self):
 		return self.tem_min;
@@ -57,14 +56,12 @@ class Config:
 	def getTemMax(self):
 		return self.tem_max;
 	
-	def getTemAlertMin(self):
-		return 30.0;
 
-	def getTemAlertMax(self):
-		return 31.0;
+	def getTemMinByWire(self):
+		return self.tem_min-TEMP_CAL;
 
-	def getHumAlertMin(self):
-		return 70;
+	def getTemMaxByPeltier(self):
+		return self.tem_max+TEMP_CAL;
 
     	def __str__(self):
         	return "Temp min: %s - Temp max: %s - Hum min: %s - Hum max: %s" \

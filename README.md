@@ -38,3 +38,10 @@ mongo < /home/pi/inKoutPi/DB/mongo-1.0.js
 sudo apt-get install python-pip
 sudo apt-get install build-essential python-dev
 sudo python -m pip install pymongo==3.0.3
+
+Version 2.0 inKoutPi
+
+- DJango
+git clone https://github.com/django/django.git
+
+
