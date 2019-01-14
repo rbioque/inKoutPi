@@ -19,5 +19,9 @@ from . import views
 
 urlpatterns = [
     	path('', views.monitoring),
+	path('monitoring/index.html', views.monitoring),
+	path('alerts/alerts.html', views.alerts),
+	path('history/history.html', views.history),
+	path('config/config.html', views.conf, name='post_config'),
 	path('admin/', admin.site.urls),
 ]

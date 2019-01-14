@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block title %}inKoutPi | Alerts{% endblock %}
+
+{% block content %}
+	<table id="dtAlerts" class="table table-striped table-sm order-column" cellspacing="0" width="100%">
+  		<thead class="thead-primary">
+    			<tr>
+      				<th scope="col">#</th>
+      				<th scope="col">Tem</th>
+      				<th scope="col">Hum</th>
+      				<th scope="col">Fecha</th>
+				<th scope="col">Info</th>
+    			</tr>
+  		</thead>
+  		<tbody>
+    		{% for alert in alerts %}
+			<tr>
+      				<th scope="row" class="">{{ forloop.counter }}</th>
+      				<td class="txt-black">{{ alert.tem|floatformat:"2" }}</td>
+      				<td class="txt-black">{{ alert.hum|floatformat:"2" }}</td>
+      				<td class="txt-black">{{ alert.date }}</td>
+				<td class="{{ alert.type }}">{{ alert.msg }}</td>
+    			</tr>
+		{% endfor %}
+  		</tbody>
+	</table>
+{% endblock %}
+

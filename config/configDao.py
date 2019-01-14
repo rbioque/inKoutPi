@@ -3,8 +3,8 @@
 __author__ = 'rbioque'
 
 import pymongo
-import config
-import configAlert
+from . import config
+from . import configAlert
 
 class ConfigDao:
 
@@ -19,8 +19,20 @@ class ConfigDao:
 		c = config.Config(r['tem_min'], r['tem_max'],r['hum_min'],r['hum_max'])
 		return c;
 	
+	def findJSON(self):
+		return self.db.CONFIG.find_one({'type': "CONFIG"})
+			
 	def findAlert(self):
 		r = self.db.CONFIG.find_one({'type': "CONFIG_ALERT"})
-                c = configAlert.ConfigAlert(r['tem_alert_min'], r['tem_alert_max'],r['hum_alert_min'],r['hum_alert_max'])
-                return c;
+		c = configAlert.ConfigAlert(r['tem_alert_min'], r['tem_alert_max'],r['hum_alert_min'],r['hum_alert_max'],r['mail_alert'])
+		return c;
+
+	def findAlertJSON(self):
+		return self.db.CONFIG.find_one({'type': "CONFIG_ALERT"})
+
+	def merge(self, config):
+		self.db.CONFIG.update({'type': "CONFIG"}, {'$set': config.toDBCollection()})
+
+	def mergeAlert(self, configAlert):
+		self.db.CONFIG.update({'type': "CONFIG_ALERT"}, {'$set': configAlert.toDBCollection()})
 		

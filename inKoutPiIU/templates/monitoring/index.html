@@ -3,6 +3,35 @@
 {% block title %}inKoutPi | Monitoring{% endblock %}
 
 {% block content %}
-<h1>Temperature {{ temp }}</h1>
-<h1>Humidity {{ humi }}</h1>
+
+<div class="card text-black bg-white mb-3">
+ <div class="card-body">  
+  <div class="divHead">
+   <h3 class="fas fa-temperature-high itemHead"/>
+   <h3 class="text-center display-5 textItemHead">Temperatura</h3>
+  </div>
+
+  <h3 class="text-center display-5"><strong> {{ last.tem|floatformat:"2" }} </strong>ºC</h3>
+  <canvas id="chLineTem"></canvas>
+  <h6 class="text-center"><small class="">{{ last.date }}</small></h6>
+ </div>
+</div>
+
+<div class="card text-black bg-white mb-3">
+ <div class="card-body">
+  <div class="divHead">
+   <h3 class="fas fa-cloud-rain itemHead"/>
+   <h3 class="text-center display-5 textItemHead">Humedad</h3>
+  </div>
+
+  <h3 class="text-center display-5"><strong> {{ last.hum|floatformat:"2" }} </strong>%</h3>
+  <canvas id="chLineHum"></canvas>
+  <h6 class="text-center"><small class="">{{ last.date }}</small></h6>
+ </div>
+</div>
+
+<script type="text/javascript">
+	initChart(JSON.parse('{{ lasts }}'.replace(/&quot;/g,'"')), JSON.parse('{{ conf }}'.replace(/&quot;/g,'"')));
+</script>
 {% endblock %}
+

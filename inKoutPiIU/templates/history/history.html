@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block title %}inKoutPi | History{% endblock %}
+
+{% block content %}
+	<table id="dtHistory" class="table table-striped table-sm order-column" cellspacing="0" width="100%">
+  		<thead class="thead-primary">
+    			<tr>
+      				<th scope="col">#</th>
+      				<th scope="col">Tem</th>
+      				<th scope="col">Hum</th>
+      				<th scope="col">Fecha</th>
+    			</tr>
+  		</thead>
+  		<tbody>
+    		{% for item in history %}
+			<tr>
+      				<th scope="row" class="txt-primary">{{ forloop.counter }}</th>
+      				<td class="txt-black">{{ item.tem|floatformat:"2" }}</td>
+      				<td class="txt-black">{{ item.hum|floatformat:"2" }}</td>
+      				<td>{{ item.date }}</td>
+    			</tr>
+		{% endfor %}
+  		</tbody>
+	</table>
+{% endblock %}
+

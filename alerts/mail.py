@@ -4,6 +4,7 @@
 # mail notification
 __author__ = 'rbioque'
 
+import sys
 import smtplib
 from email.MIMEMultipart import MIMEMultipart
 from email.MIMEText import MIMEText
@@ -14,34 +15,24 @@ class Mail:
 	def __init__(self):
 		self.server = smtplib.SMTP('smtp.gmail.com', 587)
 		self.server.starttls()
-		self.server.login("raul.bioque@gmail.com", "badrelition##3")
+		self.server.login("vperentie@gmail.com", "badrelition")
 
-	def send(self, body, config="", measure=""):
+	def send(self, body, configAlert, config, measure):
 		msg = MIMEMultipart()
-		msg['From'] = "raul.bioque@gmail.com"
-		msg['To'] = "raul.bioque@gmail.com"
-		msg['CC'] = "estefania.luque85@gmail.com"
+		msg['From'] = "vperentie@gmail.com"
+		msg['To'] = configAlert.getMailAlert()
 		msg['Subject'] = "inKoutPi alert notification"	
 		
-		#html = """\
-    		#	<p>This is an inline image<br/>
-        	#		<img src="cid:image1">
-    		#	</p>
-		#"""
-		
 		html = 	"<b>" + body + "</b><br/><br/>" + \
-			"<b>Configuration</b><br/>" + config + "<br/><br/>" + \
-			"<b>Measure</b><br/>" + measure + "<br/><br/>"
+			"<b>Configuration</b><br/>" + config.__str__() + "<br/><br/>" + \
+			"<b>Measure</b><br/>" + measure.__str__() + "<br/><br/>"
 			 
 		msgHtml = MIMEText(html, 'html')
-		#img = open('/home/pi/inKoutPi/alerts/avatar.png', 'rb').read()
-    		#msgImg = MIMEImage(img, 'png')
-    		#msgImg.add_header('Content-ID', '<image1>')
-    		#msgImg.add_header('Content-Disposition', 'inline', filename='/home/pi/inKoutPi/alerts/avatar.png')
-		
 		msg.attach(msgHtml)
-		#msg.attach(msgImg)
 
-		self.server.sendmail("inKoutPi@inKoutPi.es", "raul.bioque@gmail.com", msg.as_string())
+		try:
+			self.server.sendmail("inKoutPi@inKoutPi.es", configAlert.getMailAlert(), msg.as_string())
+		except:
+			print 'Error en envio de alerta. ', sys.exc_info()
 		self.server.quit()
 

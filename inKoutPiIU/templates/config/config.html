@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+
+{% block title %}inKoutPi | Config{% endblock %}
+
+{% block content %}
+<form action="" method="post">
+	{% csrf_token %}
+	
+	<div class="card conf">
+	  <div class="card-body">
+  		<div class="divHead">
+		  <h3 class="fas fa-cog itemHead"/>
+   		  <h3 class="text-center display-5 textItemHead">Configuración básica</h3>
+  		</div>
+	
+		{{ form.tem_max.label_tag }}
+		{{ form.tem_max }}
+		<br/>
+                {{ form.tem_min.label_tag }}
+                {{ form.tem_min }}
+		<br/>
+                {{ form.hum_max.label_tag }}
+                {{ form.hum_max }}
+		<br/>
+                {{ form.hum_min.label_tag }}
+                {{ form.hum_min }}
+	  </div>
+	</div>
+
+        <div class="card conf">
+	  <div class="card-body">
+                <div class="divHead">
+                  <h3 class="far fa-bell itemHead"/>
+                  <h3 class="text-center display-5 textItemHead">Alertas</h3>
+                </div>
+
+              	{{ formAlert.tem_alert_max.label_tag }}
+                {{ formAlert.tem_alert_max }}
+                <br/>
+                {{ formAlert.tem_alert_min.label_tag }}
+                {{ formAlert.tem_alert_min }}
+                <br/>
+                {{ formAlert.hum_alert_max.label_tag }}
+                {{ formAlert.hum_alert_max }}
+                <br/>
+                {{ formAlert.hum_alert_min.label_tag }}
+                {{ formAlert.hum_alert_min }}
+		<br/>
+		{{ formAlert.mail_alert.label_tag }}
+		{{ formAlert.mail_alert }}
+       	  </div>
+   	</div>
+
+	<div class="inputAceptar">
+	<input type="submit" value="Aceptar" class="btn btn-primary btn-block">
+	</div>
+</form>
+{% endblock %}
+

@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block title %}inKoutPi | Monitoring{% endblock %}
+
+{% block content %}
+<h1> {{ last.tem }}</h1>
+<h1> {{ last.hum }}</h1>
+{{ last.date }}
+
+<div class="container">
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <canvas id="chLine"></canvas>
+                </div>
+            </div>
+        </div>
+     </div>     
+</div>
+
+<script type="text/javascript">
+	//console.log({{ lasts }});
+	initChart(JSON.parse('{{ lasts }}'.replace(/&quot;/g,'"')));
+</script>
+{% endblock %}
+
