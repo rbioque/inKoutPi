@@ -23,7 +23,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = 'uy))abekf&0-lo0q-pxcubkp3@02p5srt0cq=fdsx+t$eg3hqh'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = [
 'localhost', '127.0.0.1', '192.168.1.123', 'inkoutpi.ddns.net'
@@ -56,7 +56,7 @@ ROOT_URLCONF = 'inKoutPiIU.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': ['inKoutPiIU/templates/'],
+        'DIRS': ['/home/pi/inKoutPi/inKoutPiIU/templates/'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
