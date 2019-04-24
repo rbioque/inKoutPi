@@ -23,10 +23,10 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = 'uy))abekf&0-lo0q-pxcubkp3@02p5srt0cq=fdsx+t$eg3hqh'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = [
-'localhost', '127.0.0.1', '192.168.1.123', 'inkoutpi.ddns.net'
+'localhost', '127.0.0.1', '192.168.1.123', 'rbioquepc.no-ip.org'
 ]
 
 
@@ -123,4 +123,4 @@ STATIC_URL = '/static/'
 
 import os
 SITE_ROOT = os.path.dirname(os.path.realpath(__file__))
-STATICFILES_DIRS = (os.path.join(SITE_ROOT, 'static/'),)
+STATICFILES_DIRS = (os.path.join(SITE_ROOT, '/home/pi/inKoutPi/inKoutPiIU/static/'),)
