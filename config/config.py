@@ -5,8 +5,8 @@ __author__ = 'rbioque'
 
 import sys
 
-TEMP_CAL = 0.1
-TEMP_STOP_CAL = 0.01
+TEMP_CAL_PEL = 0.6
+TEMP_CAL_WIR = 0.1
 
 class Config:
 
@@ -33,12 +33,12 @@ class Config:
 		return False;
 
 	def isTempGreaterRangeByWire(self, temp):
-		if temp >= self.getTemMin()-TEMP_STOP_CAL:
+		if temp > self.getTemMinByWire():
 			return True;
 		return False;
 
 	def isTempLessRangeByPeltier(self, temp):
-		if temp <= self.getTemMax()+TEMP_STOP_CAL:
+		if temp < self.getTemMaxByPeltier():
 			return True;
 		return False;
 
@@ -58,10 +58,10 @@ class Config:
 	
 
 	def getTemMinByWire(self):
-		return self.tem_min-TEMP_CAL;
+		return self.tem_min-TEMP_CAL_WIR;
 
 	def getTemMaxByPeltier(self):
-		return self.tem_max+TEMP_CAL;
+		return self.tem_max+TEMP_CAL_PEL;
 
 	def __str__(self):
 		return "Temp min: %s - Temp max: %s - Hum min: %s - Hum max: %s" \
