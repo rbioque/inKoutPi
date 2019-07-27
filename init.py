@@ -15,7 +15,7 @@ from alerts import mail
 
 #Define log file
 logging.basicConfig(filename='/var/log/inkoutpi.log',
-                    level=logging.ERROR,
+                    level=logging.DEBUG,
                     format='%(asctime)s %(levelname)s: %(message)s',
                     datefmt='%d/%m/%Y %I:%M:%S')
 
@@ -32,7 +32,7 @@ rele = rele.Rele()
 measure = sensor.getMeasure()
 
 ## Meausre debug
-logging.debug('Wire enabled: %s. Peltier enabled: %s. Fan enabled: %s. Measure: %s',rele.isWireEnabled(), rele.isPeltierEnabled(), rele.isFanEnabled(), measure)
+logging.debug('Wire enabled: %s. Peltier enabled: %s. Fan enabled: %s. Fan peltier enabled: %s. Measure: %s',rele.isWireEnabled(), rele.isPeltierEnabled(), rele.isFanEnabled(), rele.isFanPeltierEnabled(), measure)
 
 # Rele control temperature
 if rele.isWireEnabled() and config.isTempGreaterRangeByWire(measure.getTemp()):
@@ -44,7 +44,11 @@ elif rele.isPeltierEnabled() and config.isTempLessRangeByPeltier(measure.getTemp
 	rele.coldPeltier(False)
 	rele.fan(False)
 	logging.info('Colding peltier disabled. Temp={0:0.1f}* <= Temp_min={1:0.1f}'.format(measure.getTemp(), config.getTemMax()))
-
+	time.sleep(300)
+	if rele.isPeltierDisabled():
+		rele.fanPeltier(False)	
+		logging.info('Fan peltier disabled. Temp old={0:0.1f}. Temp new={1:0.1}'.format(measure.getTemp(), sensor.getMeasure().getTemp()))
+	
 elif rele.isWireDisabled() and config.isTempLessRangeByWire(measure.getTemp()):
 	rele.hotWire(True)
 	rele.fan(True)
@@ -53,7 +57,8 @@ elif rele.isWireDisabled() and config.isTempLessRangeByWire(measure.getTemp()):
 elif rele.isPeltierDisabled() and config.isTempGreaterRangeByPeltier(measure.getTemp()):
 	rele.coldPeltier(True)
 	rele.fan(True)
-	logging.info('Colding peltier enabled. Temp={0:0.1f}* < Temp_max={1:0.1f}'.format(measure.getTemp(), config.getTemMaxByPeltier()))
+	rele.fanPeltier(True)
+	logging.info('Colding peltier enabled. Temp={0:0.1f}* < Temp_max={1:0.1f}'.format(measure.getTemp(), config.getTemMaxByPeltier()))	
 
 # Temp Alert control
 if configAlert.isTempAlertLessRange(measure.getTemp()):

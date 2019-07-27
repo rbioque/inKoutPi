@@ -3,6 +3,7 @@
 __author__ = 'rbioque'
 
 import pymongo
+pymongo.has_c()
 from . import measure
 
 class HistoryDao:
@@ -21,8 +22,8 @@ class HistoryDao:
 		return measure;
 
 	def findLastsMeasure(self, rows):
-                measures = self.db.HISTORY.find().sort("date", -1).limit(rows)
-                return measures;
+		measures = self.db.HISTORY.find().sort("date", -1).limit(rows)
+		return measures;
 
 	def findLastsOnlyMeasure(self, rows):
 		measures = self.db.HISTORY.find({ "msg": { "$exists": False } }).sort("date", -1).limit(rows)

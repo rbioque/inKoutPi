@@ -1,10 +1,14 @@
 import sys
 import os
-import json
+#import json
+import ujson as json
 
 from bson import BSON
 from bson import json_util
-from bson.json_util import dumps, loads
+from bson.json_util import loads, dumps
+#from json import loads, dumps
+#import ujson
+#import bsonjs
 
 from django.http import HttpResponse
 from django.shortcuts import render
@@ -17,16 +21,19 @@ from history import historyDao
 from config import configDao, config, configAlert
 
 def monitoring(request):
+	print("1. inicio metodo")
 	hisDao = historyDao.HistoryDao()
 	cnfDao = configDao.ConfigDao()
 
-	last = loads(dumps(hisDao.findLastMeasure()))
-	lasts = dumps(hisDao.findLastsMeasure(10), ensure_ascii=False)
+	aux = hisDao.findLastsMeasure(10)
+	last = aux[0]
+	lasts = dumps(aux)
 	conf = dumps(cnfDao.findJSON(), ensure_ascii=False) 
 
-	return render(request, 'monitoring/index.html', {'last': last[0], 'lasts': lasts, 'conf': conf})
+	return render(request, 'monitoring/index.html', {'last': last, 'lasts': lasts, 'conf': conf})
 
 def alerts(request):
+	print("alerts")
 	hisDao = historyDao.HistoryDao()
 	alerts = loads(dumps(hisDao.findAlerts(500)))
 	return render(request, 'alerts/alerts.html', {'alerts': alerts})

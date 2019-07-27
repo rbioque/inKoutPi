@@ -5,7 +5,8 @@ __author__ = 'rbioque'
 
 import sys
 
-TEMP_CAL_PEL = 0.6
+TEMP_MIN_CAL_PEL = 0.4
+TEMP_MAX_CAL_PEL = 0.6
 TEMP_CAL_WIR = 0.1
 
 class Config:
@@ -38,12 +39,12 @@ class Config:
 		return False;
 
 	def isTempLessRangeByPeltier(self, temp):
-		if temp < self.getTemMaxByPeltier():
+		if temp <= self.tem_max+TEMP_MIN_CAL_PEL:
 			return True;
 		return False;
 
 	def isTempGreaterRangeByPeltier(self, temp):
-		if temp >= self.getTemMaxByPeltier():
+		if temp >= self.tem_max+TEMP_MAX_CAL_PEL:
 			return True;
 		return False;
 
