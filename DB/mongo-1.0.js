@@ -15,9 +15,11 @@ db.CONFIG.insert({
 	"tem_alert_max": 32.00,           
 	"hum_alert_min": 60,         
 	"hum_alert_max": 120,
-	"mail_alert": "raul.bioque@gmail.com" 
+	"mail_alert": "raul.bioque@gmail.com",
+	"id": "inKoutPi Brother"
 })
 
 db.createCollection("HISTORY")
+
 
 
