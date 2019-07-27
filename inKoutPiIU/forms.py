@@ -1,7 +1,7 @@
 from django import forms
 
 class ConfigForm(forms.Form):
-	id = forms.CharField(lable='Id')
+	id = forms.CharField(label='Id')
 	tem_max = forms.DecimalField(label='Temperatura máxima', max_digits=4, decimal_places=2, max_value=35.00, min_value=25.00, localize=True)
 	tem_min = forms.DecimalField(label='Temperatura mínima', max_digits=4, decimal_places=2, max_value=35.00, min_value=25.00, localize=True)
 	hum_max = forms.DecimalField(label='Humedad máxima', max_digits=5, decimal_places=2, max_value=120.00, min_value=0.00, localize=True)
