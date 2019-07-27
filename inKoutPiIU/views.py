@@ -49,7 +49,7 @@ def conf(request):
 		formAlert = ConfigAlertForm(request.POST)
 		
 		if form.is_valid() and formAlert.is_valid():
-			cnfDao.merge(config.Config(str(form.cleaned_data['tem_min']), str(form.cleaned_data['tem_max']), str(form.cleaned_data['hum_min']), str(form.cleaned_data['hum_max'])))
+			cnfDao.merge(config.Config(str(form.cleaned_data['id']), str(form.cleaned_data['tem_min']), str(form.cleaned_data['tem_max']), str(form.cleaned_data['hum_min']), str(form.cleaned_data['hum_max'])))
 			cnfDao.mergeAlert(configAlert.ConfigAlert(str(formAlert.cleaned_data['tem_alert_min']), str(formAlert.cleaned_data['tem_alert_max']), str(formAlert.cleaned_data['hum_alert_min']), str(formAlert.cleaned_data['hum_alert_max']), str(formAlert.cleaned_data['mail_alert'])))
 			messages.add_message(request, messages.INFO, 'Configuración guardada correctamente!')
 		else:
