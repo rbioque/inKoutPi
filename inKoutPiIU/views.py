@@ -1,7 +1,6 @@
 import sys
 import os
 #import json
-import ujson as json
 
 from bson import BSON
 from bson import json_util
