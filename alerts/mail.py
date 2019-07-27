@@ -21,7 +21,7 @@ class Mail:
 		msg = MIMEMultipart()
 		msg['From'] = "vperentie@gmail.com"
 		msg['To'] = configAlert.getMailAlert()
-		msg['Subject'] = "inKoutPi alert notification"	
+		msg['Subject'] = config.getId() + ". Alert notification"	
 		
 		html = 	"<b>" + body + "</b><br/><br/>" + \
 			"<b>Configuration</b><br/>" + config.__str__() + "<br/><br/>" + \

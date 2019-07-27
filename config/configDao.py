@@ -16,7 +16,7 @@ class ConfigDao:
 
 	def find(self):
 		r = self.db.CONFIG.find_one({'type': "CONFIG"})
-		c = config.Config(r['tem_min'], r['tem_max'],r['hum_min'],r['hum_max'])
+		c = config.Config(r['id'], r['tem_min'], r['tem_max'],r['hum_min'],r['hum_max'])
 		return c;
 	
 	def findJSON(self):

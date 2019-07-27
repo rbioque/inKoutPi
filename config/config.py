@@ -11,14 +11,16 @@ TEMP_CAL_WIR = 0.1
 
 class Config:
 
-	def __init__(self, tem_min, tem_max, hum_min, hum_max):
+	def __init__(self, id, tem_min, tem_max, hum_min, hum_max):
 		self.tem_min = float(tem_min)
 		self.tem_max = float(tem_max)
 		self.hum_min = float(hum_min)
 		self.hum_max = float(hum_max)
+		self.id = id
 
 	def toDBCollection (self):
 		return {
+			"id":self.id,
 			"tem_min":self.tem_min,
 			"tem_max":self.tem_max,
 			"hum_min":self.hum_min,
@@ -63,6 +65,9 @@ class Config:
 
 	def getTemMaxByPeltier(self):
 		return self.tem_max+TEMP_CAL_PEL;
+
+	def getId(self):
+		return self.id;
 
 	def __str__(self):
 		return "Temp min: %s - Temp max: %s - Hum min: %s - Hum max: %s" \
