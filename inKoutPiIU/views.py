@@ -20,7 +20,6 @@ from history import historyDao
 from config import configDao, config, configAlert
 
 def monitoring(request):
-	print("1. inicio metodo")
 	hisDao = historyDao.HistoryDao()
 	cnfDao = configDao.ConfigDao()
 
@@ -32,7 +31,6 @@ def monitoring(request):
 	return render(request, 'monitoring/index.html', {'last': last, 'lasts': lasts, 'conf': conf})
 
 def alerts(request):
-	print("alerts")
 	hisDao = historyDao.HistoryDao()
 	alerts = loads(dumps(hisDao.findAlerts(500)))
 	return render(request, 'alerts/alerts.html', {'alerts': alerts})
