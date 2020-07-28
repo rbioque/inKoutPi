@@ -5,8 +5,8 @@ __author__ = 'rbioque'
 
 import sys
 
-TEMP_MIN_CAL_PEL = 0.4
-TEMP_MAX_CAL_PEL = 0.6
+TEMP_MIN_CAL_PEL = -0.1
+TEMP_MAX_CAL_PEL = 0.1
 TEMP_CAL_WIR = 0.1
 
 class Config:
@@ -64,7 +64,7 @@ class Config:
 		return self.tem_min-TEMP_CAL_WIR;
 
 	def getTemMaxByPeltier(self):
-		return self.tem_max+TEMP_CAL_PEL;
+		return self.tem_max+TEMP_MAX_CAL_PEL;
 
 	def getId(self):
 		return self.id;

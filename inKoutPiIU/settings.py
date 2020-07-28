@@ -26,7 +26,7 @@ SECRET_KEY = 'uy))abekf&0-lo0q-pxcubkp3@02p5srt0cq=fdsx+t$eg3hqh'
 DEBUG = True
 
 ALLOWED_HOSTS = [
-'localhost', '127.0.0.1', '192.168.1.123', 'rbioquepc.no-ip.org', '89.39.28.156', 'inkoutpi.ddns.net', '176.56.113.82'
+'localhost', '127.0.0.1', '192.168.1.123', 'rbioquepc.no-ip.org', '89.39.28.156', 'inkoutpi.ddns.net', '176.56.113.82', 'rbioquepc.no-ip.org/inkoutpi'
 ]
 
 

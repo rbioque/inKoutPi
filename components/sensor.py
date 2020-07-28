@@ -14,7 +14,7 @@ SENSOR = 22
 PIN = 4
 
 #Calibrate DHT22
-DHT_CAL = 0.6
+DHT_CAL = 0.4
 
 class Sensor:
 

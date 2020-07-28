@@ -17,11 +17,13 @@ from django.contrib import admin
 from django.urls import path
 from . import views
 
+app_name='inkoutpi'
+
 urlpatterns = [
-    	path('', views.monitoring),
-	path('monitoring/index.html', views.monitoring),
-	path('alerts/alerts.html', views.alerts),
-	path('history/history.html', views.history),
-	path('config/config.html', views.conf, name='post_config'),
-	path('admin/', admin.site.urls),
+	path('inkoutpi/', views.monitoring),
+	path('inkoutpi/monitoring/index.html', views.monitoring),
+	path('inkoutpi/alerts/alerts.html', views.alerts),
+	path('inkoutpi/history/history.html', views.history),
+	path('inkoutpi/config/config.html', views.conf, name='post_config'),
+	path('inkoutpi/admin/', admin.site.urls),
 ]

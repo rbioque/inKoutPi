@@ -44,10 +44,10 @@ elif rele.isPeltierEnabled() and config.isTempLessRangeByPeltier(measure.getTemp
 	rele.coldPeltier(False)
 	rele.fan(False)
 	logging.info('Colding peltier disabled. Temp={0:0.1f}* <= Temp_min={1:0.1f}'.format(measure.getTemp(), config.getTemMax()))
-	time.sleep(300)
+	time.sleep(200)
 	if rele.isPeltierDisabled():
 		rele.fanPeltier(False)	
-		logging.info('Fan peltier disabled. Temp old={0:0.1f}. Temp new={1:0.1}'.format(measure.getTemp(), sensor.getMeasure().getTemp()))
+		logging.info('Fan peltier disabled. Temp old={0:0.1f}. Temp new={1:0.1f}'.format(measure.getTemp(), sensor.getMeasure().getTemp()))
 	
 elif rele.isWireDisabled() and config.isTempLessRangeByWire(measure.getTemp()):
 	rele.hotWire(True)
@@ -56,10 +56,11 @@ elif rele.isWireDisabled() and config.isTempLessRangeByWire(measure.getTemp()):
 
 elif rele.isPeltierDisabled() and config.isTempGreaterRangeByPeltier(measure.getTemp()):
 	rele.coldPeltier(True)
-	rele.fan(True)
+	#rele.fan(True)
 	rele.fanPeltier(True)
 	logging.info('Colding peltier enabled. Temp={0:0.1f}* < Temp_max={1:0.1f}'.format(measure.getTemp(), config.getTemMaxByPeltier()))	
-
+	time.sleep(60)
+	rele.fan(True)
 # Temp Alert control
 if configAlert.isTempAlertLessRange(measure.getTemp()):
 	logging.debug('Send alert. Temperature slow. Temp={0:0.1f}* < Temp_alert_min={1:0.1f}'.format(measure.getTemp(), configAlert.getTemAlertMin()))
