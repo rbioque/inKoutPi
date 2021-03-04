@@ -6,7 +6,8 @@ db.CONFIG.insert({
 	"tem_min": 30.40, 
 	"tem_max": 30.60,
 	"hum_min": 70,
-	"hum_max": 100 
+	"hum_max": 100,
+	"id": "inKoutPi"
 })
 
 db.CONFIG.insert({
@@ -16,7 +17,7 @@ db.CONFIG.insert({
 	"hum_alert_min": 60,         
 	"hum_alert_max": 120,
 	"mail_alert": "raul.bioque@gmail.com",
-	"id": "inKoutPi Brother"
+	"id": "inKoutPi"
 })
 
 db.createCollection("HISTORY")
