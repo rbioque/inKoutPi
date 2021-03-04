@@ -8,22 +8,19 @@ To use the tempControl you will first need a few dependencies:
 ```
 sudo apt-get update
 sudo apt-get install build-essential python-dev python-openssl
+sudo apt-get install python3-pip
+sudo python3 -m pip install --upgrade pip setuptools wheel
 ```
 
 - Adafruit_Python_DHT
 ```
-git clone https://github.com/adafruit/Adafruit_Python_DHT.git
-cd Adafruit_Python_DHT
-sudo python setup.py install
+sudo pip3 install Adafruit_DHT
 ```
 
 - WiringPi for python
 ```
 sudo apt-get install python-dev python-setuptools swig
-git clone --recursive https://github.com/WiringPi/WiringPi-Python.git
-cd WiringPi-Python
-./build.sh
-sudo python setup.py install
+sudo pip3 install wiringpi
 ```
 
 Crontab configure:
