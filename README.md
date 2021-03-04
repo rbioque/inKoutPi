@@ -14,13 +14,18 @@ sudo python3 -m pip install --upgrade pip setuptools wheel
 
 - Adafruit_Python_DHT
 ```
-sudo pip3 install Adafruit_DHT
+git clone https://github.com/adafruit/Adafruit_Python_DHT.git
+cd Adafruit_Python_DHT
+sudo python setup.py install
 ```
 
 - WiringPi for python
 ```
 sudo apt-get install python-dev python-setuptools swig
-sudo pip3 install wiringpi
+git clone --recursive https://github.com/WiringPi/WiringPi-Python.git
+cd WiringPi-Python
+./build.sh
+sudo python setup.py install
 ```
 
 Crontab configure:
