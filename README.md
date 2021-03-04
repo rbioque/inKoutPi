@@ -42,7 +42,7 @@ Version 1.1 inKoutPi
 ```
 sudo apt-get install mongodb
 sudo /etc/init.d/mongodb start
-mongo < /home/pi/inKoutPi/DB/mongo-1.0.js 
+mongo < /home/pi/inKoutPi/DB/mongo-init.js 
 ```
 
 - PyMongo
