@@ -61,7 +61,7 @@ sudo python3 -m pip install django
 sudo pip install pymongo==3.4.0
 ```
 
-Configuración inicio
+- Configuration
 ```
 sudo cp inKoutPi/inkoutpiIU /etc/init.d/
 sudo chmod 755 /etc/init.d/inkoutpiIU
