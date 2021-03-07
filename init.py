@@ -29,38 +29,49 @@ config = cnfDao.find()
 configAlert = cnfDao.findAlert()
 rele = rele.Rele()
 
+SYSTEM_ENABLE = True
 measure = sensor.getMeasure()
 
 ## Meausre debug
 logging.debug('Wire enabled: %s. Peltier enabled: %s. Fan enabled: %s. Fan peltier enabled: %s. Measure: %s',rele.isWireEnabled(), rele.isPeltierEnabled(), rele.isFanEnabled(), rele.isFanPeltierEnabled(), measure)
 
-# Rele control temperature
-if rele.isWireEnabled() and config.isTempGreaterRangeByWire(measure.getTemp()):
-	rele.hotWire(False)
+if SYSTEM_ENABLE:    
+    # Rele control temperature
+    if rele.isWireEnabled() and config.isTempGreaterRangeByWire(measure.getTemp()):
+        rele.hotWire(False)
 	rele.fan(False)
 	logging.info('Heating wire disabled. Temp={0:0.1f}* <= Temp_max={1:0.1f}'.format(measure.getTemp(), config.getTemMin()))
 
-elif rele.isPeltierEnabled() and config.isTempLessRangeByPeltier(measure.getTemp()):
+    elif rele.isPeltierEnabled() and config.isTempLessRangeByPeltier(measure.getTemp()):
 	rele.coldPeltier(False)
 	rele.fan(False)
-	logging.info('Colding peltier disabled. Temp={0:0.1f}* <= Temp_min={1:0.1f}'.format(measure.getTemp(), config.getTemMax()))
+
+        rele.hotWire(False)
+        rele.fanPeltier(True)
+	
+        logging.info('Colding peltier disabled. Temp={0:0.1f}* <= Temp_min={1:0.1f}'.format(measure.getTemp(), config.getTemMax()))
 	time.sleep(200)
 	if rele.isPeltierDisabled():
 		rele.fanPeltier(False)	
 		logging.info('Fan peltier disabled. Temp old={0:0.1f}. Temp new={1:0.1f}'.format(measure.getTemp(), sensor.getMeasure().getTemp()))
 	
-elif rele.isWireDisabled() and config.isTempLessRangeByWire(measure.getTemp()):
+    elif rele.isWireDisabled() and config.isTempLessRangeByWire(measure.getTemp()):
 	rele.hotWire(True)
 	rele.fan(True)
 	logging.info('Heating wire enabled. Temp={0:0.1f}* < Temp_min={1:0.1f}'.format(measure.getTemp(), config.getTemMinByWire()))
 
-elif rele.isPeltierDisabled() and config.isTempGreaterRangeByPeltier(measure.getTemp()):
+    elif rele.isPeltierDisabled() and config.isTempGreaterRangeByPeltier(measure.getTemp()):
 	rele.coldPeltier(True)
-	#rele.fan(True)
 	rele.fanPeltier(True)
 	logging.info('Colding peltier enabled. Temp={0:0.1f}* < Temp_max={1:0.1f}'.format(measure.getTemp(), config.getTemMaxByPeltier()))	
 	time.sleep(60)
 	rele.fan(True)
+else:
+    rele.coldPeltier(False)
+    rele.hotWire(False)
+    rele.fan(False)
+    rele.fanPeltier(False)
+
 # Temp Alert control
 if configAlert.isTempAlertLessRange(measure.getTemp()):
 	logging.debug('Send alert. Temperature slow. Temp={0:0.1f}* < Temp_alert_min={1:0.1f}'.format(measure.getTemp(), configAlert.getTemAlertMin()))
@@ -75,7 +86,7 @@ elif configAlert.isTempAlertGreaterRange(measure.getTemp()):
 # Humidity alert control
 if configAlert.isDoorOpen(measure.getHumi()):
 	logging.error('Get humidity error!!')
-#	mail.Mail().send("Wargning. The door is open", config.__str__(), measure.__str__())
+##	mail.Mail().send("Wargning. The door is open", config.__str__(), measure.__str__())
 
 elif configAlert.isHumAlertLessRange(measure.getHumi()):
 	logging.debug('Send alert. Humidity slow. Hum={0:0.1f}* < Hum_alert_min={1:0.1f}'.format(measure.getHumi(), configAlert.getHumAlertMin()))
