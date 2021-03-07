@@ -57,7 +57,13 @@ Version 2.0 inKoutPi
 - DJango
 ```
 python -m pip install --upgrade pip setuptools
-python3 -m pip install django
-pip install pymongo==3.4.0
-/usr/bin/python3 manage.py runserver 192.168.1.123:8080
+sudo python3 -m pip install django
+sudo pip install pymongo==3.4.0
+```
+
+Configuración inicio
+```
+sudo cp inKoutPi/inkoutpiIU /etc/init.d/
+sudo chmod 755 /etc/init.d/inkoutpiIU
+sudo update-rc.d inkoutpiIU defaults
 ```
