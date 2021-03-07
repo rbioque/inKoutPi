@@ -56,5 +56,8 @@ Version 2.0 inKoutPi
 
 - DJango
 ```
-git clone https://github.com/django/django.git
+python -m pip install --upgrade pip setuptools
+python3 -m pip install django
+pip install pymongo==3.4.0
+/usr/bin/python3 manage.py runserver 192.168.1.123:8080
 ```
