@@ -32,8 +32,8 @@ Crontab configure:
 sudo crontab -e
 ```
 ```
-*/1 * * * * /usr/bin/python /home/pi/inKoutPi/tempControl.py
-*/1 * * * * sleep 30 && /usr/bin/python /home/pi/inKoutPi/tempControl.py
+*/1 * * * * /usr/bin/python /home/pi/inKoutPi/init.py
+*/1 * * * * sleep 30 && /usr/bin/python /home/pi/inKoutPi/init.py
 ```
 
 Version 1.1 inKoutPi
